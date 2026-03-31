@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SignalForge Systems — Missed Revenue Recovery for Local Service Businesses</title>
+<meta name="description" content="You're losing jobs before you even know they called. SignalForge installs a system that captures every missed call, follows up automatically, and books the job. Round 3 — 7 spots."/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#080c0a;
+  --bg-card:#0f1410;
+  --bg-raised:#141a15;
+  --border:#1e2820;
+  --green:#22c55e;
+  --green-hi:#4ade80;
+  --green-dim:rgba(34,197,94,0.12);
+  --amber:#d97706;
+  --amber-hi:#fbbf24;
+  --amber-dim:rgba(217,119,6,0.15);
+  --red:#dc2626;
+  --red-hi:#f87171;
+  --red-dim:rgba(220,38,38,0.15);
+  --bone:#e8e4d4;
+  --dim:#6b7a6d;
+  --radius:4px;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--bone);font-family:'Courier New',Courier,monospace;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(8,12,10,0.96);border-bottom:1px solid var(--border);backdrop-filter:blur(8px);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:8px;}
+.nav-logo-mark{color:var(--green-hi);font-size:16px;font-weight:900;}
+.nav-logo-sub{color:var(--dim);font-size:10px;letter-spacing:3px;}
+.btn-primary{background:var(--green);color:#000;font-family:inherit;font-size:11px;font-weight:900;letter-spacing:2px;border:none;border-radius:var(--radius);padding:9px 18px;cursor:pointer;transition:background .15s,transform .1s;display:inline-block;}
+.btn-primary:hover{background:var(--green-hi);transform:translateY(-1px);}
+.btn-ghost{background:transparent;color:var(--dim);font-family:inherit;font-size:11px;font-weight:700;letter-spacing:1px;border:1px solid var(--border);border-radius:var(--radius);padding:9px 18px;cursor:pointer;transition:all .15s;display:inline-block;}
+.btn-ghost:hover{border-color:var(--green);color:var(--green);}
+
+/* ── LAYOUT ── */
+.section{padding:72px 24px;max-width:1100px;margin:0 auto;}
+.section-sm{padding:48px 24px;max-width:1100px;margin:0 auto;}
+hr.divider{border:none;border-top:1px solid var(--border);}
+
+/* ── LABELS ── */
+.sys-label{font-size:10px;letter-spacing:3px;color:var(--green);margin-bottom:16px;font-weight:700;}
+.sys-label-dim{font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:16px;font-weight:700;}
+
+/* ── HERO ── */
+.hero{padding:100px 24px 56px;max-width:1100px;margin:0 auto;}
+.hero-headline{font-size:clamp(28px,5vw,48px);font-weight:900;line-height:1.12;margin:14px 0 22px;max-width:820px;}
+.hero-headline .accent{color:var(--green-hi);}
+.hero-sub{font-size:15px;color:var(--dim);max-width:600px;margin-bottom:36px;line-height:1.9;}
+.hero-sub strong{color:var(--bone);}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:48px;}
+.hero-stats{display:flex;gap:40px;flex-wrap:wrap;}
+.hero-stat-val{font-size:26px;font-weight:900;color:var(--green);}
+.hero-stat-lbl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:2px;margin-top:2px;}
+
+/* ── COHORT BAR ── */
+.cohort-bar{background:#0e100b;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 24px;}
+.cohort-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.cohort-dot{width:9px;height:9px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 1.6s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.8);}}
+.cohort-label{font-size:11px;color:var(--dim);letter-spacing:1px;}
+.cohort-boxes{display:flex;gap:5px;align-items:center;}
+.cbox{width:26px;height:26px;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+.cbox.taken{background:var(--red-dim);border:1px solid rgba(220,38,38,.4);color:var(--red-hi);}
+.cbox.open{background:var(--green-dim);border:1px solid rgba(34,197,94,.4);color:var(--green-hi);}
+.cohort-count{font-size:12px;}
+.cohort-count strong{color:var(--green-hi);font-weight:900;}
+.cohort-count span{color:var(--dim);}
+
+/* ── CALCULATOR ── */
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;}
+@media(max-width:680px){.calc-grid{grid-template-columns:1fr;}}
+.calc-slider-wrap{margin-bottom:24px;}
+.calc-slider-wrap label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;font-size:13px;color:var(--dim);}
+.calc-slider-wrap label span{font-size:18px;font-weight:900;color:var(--amber-hi);}
+input[type=range]{width:100%;accent-color:var(--amber-hi);background:transparent;cursor:pointer;height:4px;}
+.calc-range-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-top:4px;letter-spacing:1px;}
+.calc-result{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:var(--radius);padding:28px;}
+.calc-result-label{font-size:10px;letter-spacing:3px;color:var(--red);margin-bottom:20px;font-weight:700;}
+.calc-row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--border);}
+.calc-row-label{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;}
+.calc-row-val{font-size:18px;font-weight:900;color:var(--bone);}
+.calc-row.annual .calc-row-val{font-size:28px;color:var(--red-hi);}
+.calc-note{margin-top:18px;font-size:11px;color:var(--dim);line-height:1.7;}
+.calc-note strong{color:var(--green-hi);}
+
+/* ── CARDS ── */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);}
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;}
+.problem-card{padding:22px;border-top:2px solid;}
+.problem-card.red-top{border-top-color:var(--red);}
+.problem-card.amber-top{border-top-color:var(--amber);}
+.problem-card-icon{font-size:24px;margin-bottom:10px;}
+.problem-card-type{font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:6px;}
+.problem-card.red-top .problem-card-type{color:var(--red-hi);}
+.problem-card.amber-top .problem-card-type{color:var(--amber-hi);}
+.problem-card p{font-size:12px;color:var(--dim);line-height:1.7;margin-bottom:12px;}
+.problem-card-stat{font-size:11px;padding-top:10px;border-top:1px solid var(--border);}
+.problem-card.red-top .problem-card-stat{color:var(--red-hi);}
+.problem-card.amber-top .problem-card-stat{color:var(--amber-hi);}
+
+/* ── FOUNDER ── */
+.founder-grid{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start;margin-top:20px;}
+@media(max-width:560px){.founder-grid{grid-template-columns:1fr;}}
+.founder-avatar{width:72px;height:72px;border-radius:50%;background:var(--green-dim);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:var(--green-hi);flex-shrink:0;}
+.founder-body p{font-size:14px;color:var(--dim);line-height:1.9;margin-bottom:14px;}
+.founder-body p strong{color:var(--bone);}
+.founder-body p:last-of-type{margin-bottom:0;}
+.founder-sig{margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:11px;color:var(--dim);letter-spacing:2px;}
+.founder-sig strong{color:var(--green);}
+
+/* ── OFFER ── */
+.offer-card{border:1px solid var(--green);border-radius:var(--radius);padding:36px;position:relative;overflow:hidden;background:var(--bg-card);}
+.offer-tag{position:absolute;top:0;right:0;background:var(--green);color:#000;font-size:10px;font-weight:900;padding:4px 14px;letter-spacing:2px;}
+.offer-price{font-size:clamp(36px,6vw,52px);font-weight:900;color:var(--green);line-height:1;}
+.offer-price-sub{font-size:12px;color:var(--dim);margin-top:4px;}
+.offer-outcomes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;margin-top:28px;}
+.offer-outcome{font-size:13px;color:var(--dim);padding:10px 0;border-bottom:1px solid var(--border);display:flex;gap:10px;line-height:1.6;}
+.offer-outcome:last-child{border-bottom:none;}
+.offer-outcome .tick{color:var(--green);flex-shrink:0;font-weight:900;}
+.offer-outcome .txt{color:var(--bone);}
+.ai-note{margin-top:22px;background:#0a0a0a;border:1px solid var(--border);border-left:2px solid var(--dim);border-radius:var(--radius);padding:14px 18px;font-size:11px;color:var(--dim);line-height:1.7;}
+.ai-note strong{color:var(--bone);}
+
+/* ── GUARANTEE ── */
+.guarantee-card{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;padding:32px;border-left:3px solid var(--green);}
+@media(max-width:560px){.guarantee-card{grid-template-columns:1fr;}}
+.guarantee-icon{font-size:40px;}
+.guarantee-title{font-size:18px;font-weight:900;color:var(--bone);margin:6px 0 12px;}
+.guarantee-body{font-size:13px;color:var(--dim);line-height:1.9;max-width:640px;}
+.guarantee-body strong{color:var(--bone);}
+
+/* ── PROCESS ── */
+.process-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+.process-step{background:var(--bg-card);padding:24px;}
+.process-step-num{font-size:10px;color:var(--green);font-weight:900;letter-spacing:3px;margin-bottom:10px;}
+.process-step-title{font-size:14px;font-weight:900;color:var(--bone);margin-bottom:8px;}
+.process-step-body{font-size:12px;color:var(--dim);line-height:1.7;}
+
+/* ── FIT ── */
+.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:560px){.fit-grid{grid-template-columns:1fr;}}
+.fit-card{padding:22px;border-top:2px solid;}
+.fit-card.yes{border-top-color:var(--green);}
+.fit-card.no{border-top-color:var(--red);}
+.fit-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:900;margin-bottom:14px;}
+.fit-card.yes .fit-label{color:var(--green);}
+.fit-card.no  .fit-label{color:var(--red);}
+.fit-item{font-size:12px;color:var(--dim);padding:7px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;line-height:1.5;}
+.fit-item:last-child{border-bottom:none;}
+.fit-item .mark{flex-shrink:0;font-weight:900;}
+.fit-card.yes .mark{color:var(--green);}
+.fit-card.no  .mark{color:var(--red);}
+
+/* ── FINAL CTA ── */
+.final-cta{text-align:center;padding:80px 24px 100px;max-width:680px;margin:0 auto;}
+.final-cta-title{font-size:clamp(22px,4vw,36px);font-weight:900;line-height:1.2;color:var(--bone);margin-bottom:16px;}
+.final-cta-title .accent{color:var(--green-hi);}
+.final-cta-sub{font-size:13px;color:var(--dim);margin-bottom:36px;line-height:1.9;}
+.final-cta-sub strong{color:var(--bone);}
+.cta-sub-note{font-size:10px;color:var(--dim);margin-top:12px;letter-spacing:1px;line-height:1.7;}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;max-width:1100px;margin:0 auto;}
+.footer-brand{font-size:12px;color:var(--dim);}
+.footer-brand strong{color:var(--green);}
+.footer-note{font-size:11px;color:var(--dim);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-mark">◈ SignalForge</span>
+    <span class="nav-logo-sub">SYSTEMS</span>
+  </div>
+  <a href="/apply" class="btn-primary">Apply for a Spot →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="sys-label">// revenue_recovery.sys — round 3 — local service businesses only</div>
+
+  <h1 class="hero-headline">
+    Think about the last call<br/>you missed.<br/>
+    <span class="accent">That was a real job.<br/>It's already gone.</span>
+  </h1>
+
+  <p class="hero-sub">
+    You didn't lose it because your work isn't good.
+    You lost it because your business doesn't respond when you can't.
+    <strong>Most businesses accept this. I don't.</strong>
+    After 11 years building systems, I know exactly where that money went —
+    and I install something that makes sure it never happens again.
+  </p>
+
+  <div class="hero-btns">
+    <a href="/apply" class="btn-primary">Apply for a Spot →</a>
+    <a href="#calculator" class="btn-ghost">Calculate My Leak ↓</a>
+  </div>
+
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-val">$3,555</div>
+      <div class="hero-stat-lbl">one-time flat fee</div>
+    </div>
+    <div>
+      <div class="hero-stat-val">7 days</div>
+      <div class="hero-stat-lbl">live in a week</div>
+    </div>
+    <div>
+      <div class="hero-stat-val">30-day</div>
+      <div class="hero-stat-lbl">ROI guarantee</div>
+    </div>
+  </div>
+</div>
+
+<!-- COHORT BAR -->
+<div class="cohort-bar">
+  <div class="cohort-inner">
+    <div class="cohort-dot"></div>
+    <span class="cohort-label">ROUND 3 CAPACITY:</span>
+    <div class="cohort-boxes">
+      <div class="cbox taken">✕</div>
+      <div class="cbox taken">✕</div>
+      <div class="cbox taken">✕</div>
+      <div class="cbox open">○</div>
+      <div class="cbox open">○</div>
+      <div class="cbox open">○</div>
+      <div class="cbox open">○</div>
+    </div>
+    <span class="cohort-count"><strong>4 spots remaining</strong> <span>of 7 this round</span></span>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- CALCULATOR -->
+<section class="section" id="calculator">
+  <div class="sys-label">// revenue_leak_calculator.exe</div>
+  <h2 style="font-size:clamp(22px,3vw,32px);font-weight:900;margin-bottom:8px;">How Much Are You Leaking?</h2>
+  <p style="color:var(--dim);font-size:13px;margin-bottom:36px;">Move the sliders. Watch real money appear.</p>
+
+  <div class="calc-grid">
+    <div>
+      <div class="calc-slider-wrap">
+        <label>Missed calls per week <span id="lbl-calls">5</span></label>
+        <input type="range" id="sl-calls" min="1" max="30" value="5" oninput="updateCalc()"/>
+        <div class="calc-range-labels"><span>1</span><span>30</span></div>
+      </div>
+      <div class="calc-slider-wrap">
+        <label>Average job value <span id="lbl-value">$450</span></label>
+        <input type="range" id="sl-value" min="100" max="5000" step="50" value="450" oninput="updateCalc()"/>
+        <div class="calc-range-labels"><span>$100</span><span>$5,000</span></div>
+      </div>
+      <div class="calc-slider-wrap">
+        <label>Your close rate <span id="lbl-close">40%</span></label>
+        <input type="range" id="sl-close" min="10" max="90" step="5" value="40" oninput="updateCalc()"/>
+        <div class="calc-range-labels"><span>10%</span><span>90%</span></div>
+      </div>
+    </div>
+
+    <div class="calc-result card">
+      <div class="calc-result-label">▶ YOUR ESTIMATED REVENUE LEAK</div>
+      <div class="calc-row">
+        <span class="calc-row-label">Weekly</span>
+        <span class="calc-row-val" id="res-week">$900</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-row-label">Monthly</span>
+        <span class="calc-row-val" id="res-month">$3,870</span>
+      </div>
+      <div class="calc-row annual">
+        <span class="calc-row-label">Yearly</span>
+        <span class="calc-row-val" id="res-year">$46,800</span>
+      </div>
+      <div class="calc-note">
+        SignalForge costs <strong>$3,555 flat</strong> + ~$50–150/mo in infrastructure costs via Twilio.
+        If your yearly leak exceeds that — and it almost certainly does — <strong>the system pays for itself.</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- PROBLEM -->
+<section class="section">
+  <div class="sys-label">// problem_analysis.log</div>
+  <h2 style="font-size:clamp(22px,3vw,32px);font-weight:900;margin-bottom:32px;">The Four Leaks Killing Local Service Businesses</h2>
+
+  <div class="problem-grid">
+    <div class="card problem-card red-top">
+      <div class="problem-card-icon">📵</div>
+      <div class="problem-card-type">Missed Call</div>
+      <p>A customer calls while you're on the job. No answer. No callback. They dial the next number on Google. You never knew they called.</p>
+      <div class="problem-card-stat">⚠ 62% of callers won't leave a voicemail</div>
+    </div>
+    <div class="card problem-card amber-top">
+      <div class="problem-card-icon">🐌</div>
+      <div class="problem-card-type">Slow Reply</div>
+      <p>A lead comes in at 9pm. You reply next morning. They booked someone else by 8am. Speed-to-lead is the whole game.</p>
+      <div class="problem-card-stat">⚠ Response rate drops 80% after 5 minutes</div>
+    </div>
+    <div class="card problem-card red-top">
+      <div class="problem-card-icon">💀</div>
+      <div class="problem-card-type">Dead Lead</div>
+      <p>You quoted a job, followed up once, heard nothing. That lead isn't gone — they're just waiting for one more message you never sent.</p>
+      <div class="problem-card-stat">⚠ 80% of sales need 5+ follow-ups</div>
+    </div>
+    <div class="card problem-card amber-top">
+      <div class="problem-card-icon">⭐</div>
+      <div class="problem-card-type">Missing Review</div>
+      <p>You did great work. Client loved it. No review. Your competitor with 200 reviews ranks above you and gets the call first.</p>
+      <div class="problem-card-stat">⚠ 88% of customers trust reviews as much as referrals</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- FOUNDER -->
+<section class="section">
+  <div class="sys-label">// founder.bio</div>
+  <h2 style="font-size:clamp(20px,3vw,28px);font-weight:900;margin-bottom:0;">Why I Stopped Selling Pretty</h2>
+
+  <div class="founder-grid">
+    <div class="founder-avatar">R</div>
+    <div class="founder-body">
+      <p>I spent 11 years building websites and 2 years building enterprise automations — charging thousands for pretty packaging.</p>
+      <p>I know what that work actually delivers. I know because I watched clients pay $8,000 for a new brand and answer <strong>30% fewer calls the next month.</strong></p>
+      <p>Nobody cares how nice your logo is as long as you pick up when they need you. The business that answers fastest gets the job. Every time. That's the whole game.</p>
+      <p>I stopped selling pretty. <strong>I started fixing the thing that actually puts money in the bank.</strong> SignalForge is what that looks like — a flat-fee, done-for-you system that captures the revenue that was already yours. You just couldn't catch it fast enough.</p>
+      <div class="founder-sig"><strong>Raphael</strong> · Founder, SignalForge Systems</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- OFFER -->
+<section class="section">
+  <div class="sys-label">// offer.manifest</div>
+  <h2 style="font-size:clamp(22px,3vw,32px);font-weight:900;margin-bottom:28px;">The Missed Revenue Recovery System</h2>
+
+  <div class="offer-card">
+    <div class="offer-tag">FLAT FEE · ROUND 3</div>
+    <div class="offer-price">$3,555</div>
+    <div class="offer-price-sub">one-time setup · done-for-you · live in 7 days</div>
+
+    <div class="offer-outcomes">
+      <div class="offer-outcome">
+        <span class="tick">✓</span>
+        <span class="txt">Missed calls turn into booked jobs — automatically, including after hours and weekends</span>
+      </div>
+      <div class="offer-outcome">
+        <span class="tick">✓</span>
+        <span class="txt">Every lead that doesn't book immediately gets followed up — without you lifting a finger</span>
+      </div>
+      <div class="offer-outcome">
+        <span class="tick">✓</span>
+        <span class="txt">Every completed job triggers a review request — your Google rating grows on autopilot</span>
+      </div>
+      <div class="offer-outcome">
+        <span class="tick">✓</span>
+        <span class="txt">Dead leads get a revival sequence at 60, 90, and 180 days — jobs you'd written off come back</span>
+      </div>
+      <div class="offer-outcome">
+        <span class="tick">✓</span>
+        <span class="txt">You stop losing jobs to whoever answers first — because now that's always you</span>
+      </div>
+    </div>
+
+    <div class="ai-note">
+      <strong>One thing to know:</strong> The system runs on communications infrastructure via Twilio for calls and texts, plus an AI response layer. Their fees are typically <strong>$50–150/month</strong> — paid directly to them, not to me. Most clients land around $65–90/mo. I'll give you the exact number for your setup before you commit to anything.
+    </div>
+
+    <div style="margin-top:28px;">
+      <a href="/apply" class="btn-primary">Apply for a Spot →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- GUARANTEE -->
+<section class="section-sm">
+  <div class="card guarantee-card">
+    <div class="guarantee-icon">🛡️</div>
+    <div>
+      <div class="sys-label">// guarantee.protocol</div>
+      <div class="guarantee-title">30-Day ROI Guarantee</div>
+      <p class="guarantee-body">
+        If the system doesn't recover its own cost within 30 days of going live —
+        tracked, documented, shown to you — <strong>I keep working until it does at no extra charge.</strong>
+        No paperwork. No store credit. No awkward conversations.
+        We only move forward with businesses where the math makes sense.
+        That's why there's an application process.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- PROCESS -->
+<section class="section">
+  <div class="sys-label">// onboarding.process</div>
+  <h2 style="font-size:clamp(22px,3vw,32px);font-weight:900;margin-bottom:32px;">How It Works</h2>
+
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="process-step-num">STEP 01</div>
+      <div class="process-step-title">You Apply</div>
+      <p class="process-step-body">Fill in the application. I review your numbers personally. If it's a fit, you'll hear from me within 24 hours with your free Signal Snapshot and three times to connect.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">STEP 02</div>
+      <div class="process-step-title">We Talk for 20 Minutes</div>
+      <p class="process-step-body">I ask four questions. You'll know within the first ten whether this fits your business — and I'll know whether you're one of the 7. No pitch. No pressure.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">STEP 03</div>
+      <div class="process-step-title">System Live in 7 Days</div>
+      <p class="process-step-body">If you're accepted, the full system is built and live within one week. You'll hear from me every day. Nothing happens in the dark. Daily Loom updates throughout.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">STEP 04</div>
+      <div class="process-step-title">Guarantee Clock Starts</div>
+      <p class="process-step-body">Day 8 the system is running. 30 days to prove it pays for itself. If it doesn't, I keep working. Check-in call on Day 30 to review captured revenue and optimise.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- FIT -->
+<section class="section">
+  <div class="sys-label">// client_fit.check</div>
+  <h2 style="font-size:clamp(22px,3vw,32px);font-weight:900;margin-bottom:12px;">Not Everyone Gets In</h2>
+  <p style="color:var(--dim);font-size:13px;margin-bottom:28px;line-height:1.8;max-width:600px;">I'm selective because the guarantee means I'm accountable for your results. If you're not a fit, I'll tell you that on the call — not after you've paid.</p>
+
+  <div class="fit-grid">
+    <div class="card fit-card yes">
+      <div class="fit-label">✓ Strong Fit</div>
+      <div class="fit-item"><span class="mark">→</span><span>You take phone calls to get jobs — plumber, HVAC, electrician, roofer, contractor</span></div>
+      <div class="fit-item"><span class="mark">→</span><span>You've lost jobs to a competitor who picked up faster</span></div>
+      <div class="fit-item"><span class="mark">→</span><span>Average job value is $300 or higher</span></div>
+      <div class="fit-item"><span class="mark">→</span><span>You're the decision maker — no committees, no approval chains</span></div>
+      <div class="fit-item"><span class="mark">→</span><span>You've been in business at least 2 years with consistent revenue</span></div>
+    </div>
+    <div class="card fit-card no">
+      <div class="fit-label">✕ Not a Fit</div>
+      <div class="fit-item"><span class="mark">✕</span><span>Walk-in only — your leads don't come through phone calls</span></div>
+      <div class="fit-item"><span class="mark">✕</span><span>You already have a full team answering every lead within minutes</span></div>
+      <div class="fit-item"><span class="mark">✕</span><span>You want a new website, ads, or social media management</span></div>
+      <div class="fit-item"><span class="mark">✕</span><span>You need multiple approvals before spending $3,555</span></div>
+      <div class="fit-item"><span class="mark">✕</span><span>You're looking for a vendor. This works differently.</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <div class="sys-label" style="text-align:center;">// application.sys</div>
+  <h2 class="final-cta-title">
+    I don't work with everyone.<br/>
+    <span class="accent">But if the leak is real —<br/>I'll show you exactly where it is.</span>
+  </h2>
+  <p class="final-cta-sub">
+    Apply below. I'll look at your business before we talk.<br/>
+    If it's a fit, you'll know in 20 minutes.<br/>
+    <strong>4 spots left. Round 3 doesn't reopen.</strong>
+  </p>
+  <a href="/apply" class="btn-primary" style="font-size:13px;padding:16px 40px;">Apply for a Spot →</a>
+  <div class="cta-sub-note">
+    FREE SIGNAL AUDIT INCLUDED · IF IT'S NOT A FIT, I'LL TELL YOU STRAIGHT
+  </div>
+</div>
+
+<hr class="divider"/>
+<footer>
+  <div class="footer-brand"><strong>◈ SignalForge Systems</strong> · © 2026</div>
+  <div class="footer-note">Built for local service businesses. Not for everyone.</div>
+</footer>
+
+<script>
+function fmt(n){return'$'+Math.round(n).toLocaleString();}
+function updateCalc(){
+  var calls=+document.getElementById('sl-calls').value;
+  var value=+document.getElementById('sl-value').value;
+  var close=+document.getElementById('sl-close').value/100;
+  document.getElementById('lbl-calls').textContent=calls;
+  document.getElementById('lbl-value').textContent='$'+value.toLocaleString();
+  document.getElementById('lbl-close').textContent=Math.round(close*100)+'%';
+  var week=calls*value*close;
+  var month=week*4.3;
+  var year=week*52;
+  document.getElementById('res-week').textContent=fmt(week);
+  document.getElementById('res-month').textContent=fmt(month);
+  document.getElementById('res-year').textContent=fmt(year);
+}
+updateCalc();
+</script>
+</body>
+</html>
