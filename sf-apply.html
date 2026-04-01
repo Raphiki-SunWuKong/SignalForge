@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Apply — SignalForge Systems · Round 3</title>
+<meta name="description" content="Apply for a spot in Round 3. 7 businesses. Not everyone gets in."/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#080c0a;
+  --bg-card:#0f1410;
+  --bg-raised:#141a15;
+  --border:#1e2820;
+  --green:#22c55e;
+  --green-hi:#4ade80;
+  --green-dim:rgba(34,197,94,0.12);
+  --amber-hi:#fbbf24;
+  --red:#dc2626;
+  --red-hi:#f87171;
+  --bone:#e8e4d4;
+  --dim:#6b7a6d;
+  --radius:4px;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--bone);font-family:'Courier New',Courier,monospace;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+
+/* NAV */
+nav{border-bottom:1px solid var(--border);background:rgba(8,12,10,0.96);backdrop-filter:blur(8px);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:8px;}
+.nav-logo-mark{color:var(--green-hi);font-size:16px;font-weight:900;}
+.nav-logo-sub{color:var(--dim);font-size:10px;letter-spacing:3px;}
+.nav-back{font-size:11px;color:var(--dim);letter-spacing:1px;transition:color .15s;}
+.nav-back:hover{color:var(--bone);}
+
+/* LAYOUT */
+.wrapper{max-width:620px;margin:0 auto;padding:52px 24px 80px;}
+
+/* HEADER */
+.sys-label{font-size:10px;letter-spacing:3px;color:var(--green);margin-bottom:14px;font-weight:700;}
+.page-title{font-size:clamp(24px,4vw,36px);font-weight:900;line-height:1.15;color:var(--bone);margin-bottom:14px;}
+.page-title .accent{color:var(--green-hi);}
+.page-sub{font-size:13px;color:var(--dim);line-height:1.9;margin-bottom:32px;}
+.page-sub strong{color:var(--bone);}
+
+/* COHORT */
+.cohort-bar{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:var(--radius);padding:12px 16px;margin-bottom:36px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.cohort-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 1.6s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.8);}}
+.cohort-text{font-size:11px;color:var(--bone);flex:1;}
+.cohort-text strong{color:var(--red);}
+.cohort-pips{display:flex;gap:4px;}
+.pip{width:13px;height:13px;border-radius:2px;}
+.pip.taken{background:rgba(220,38,38,.25);border:1px solid rgba(220,38,38,.4);}
+.pip.open{background:var(--green-dim);border:1px solid rgba(34,197,94,.4);}
+
+/* FORM */
+.form-wrap{display:flex;flex-direction:column;gap:20px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:480px){.field-row{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:6px;}
+label{font-size:10px;letter-spacing:2px;color:var(--dim);font-weight:700;}
+.hint{font-size:10px;color:var(--dim);line-height:1.5;margin-top:4px;}
+input[type=text],input[type=email],input[type=url],input[type=number],select,textarea{
+  width:100%;background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);color:var(--bone);padding:12px 14px;
+  font-family:inherit;font-size:13px;outline:none;
+  transition:border-color .15s;appearance:none;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--green);}
+input.big,input.big:focus{font-size:22px;font-weight:900;color:var(--amber-hi);background:#060909;border-color:var(--border);}
+input.big:focus{border-color:var(--amber-hi);}
+::placeholder{color:var(--dim);opacity:.5;}
+textarea{resize:vertical;min-height:72px;}
+
+/* MATH BOX */
+.math-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;}
+.math-box-label{font-size:10px;letter-spacing:3px;color:var(--dim);font-weight:700;margin-bottom:18px;}
+
+/* LEAK RESULT */
+#leakBox{display:none;background:#060909;border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-top:18px;}
+.leak-top-label{font-size:10px;letter-spacing:2px;color:var(--dim);font-weight:700;margin-bottom:14px;}
+.leak-nums{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.leak-cell{text-align:center;}
+.leak-num{font-size:24px;font-weight:900;}
+.leak-num.week{color:var(--amber-hi);}
+.leak-num.month{color:var(--red-hi);}
+.leak-num.year{color:var(--red);font-size:30px;}
+.leak-period{font-size:9px;color:var(--dim);letter-spacing:1px;margin-top:3px;}
+.leak-verdict{padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--bone);line-height:1.7;}
+.leak-verdict strong{color:var(--green-hi);}
+.leak-verdict .warn{color:var(--red-hi);}
+
+/* SUBMIT */
+.submit-btn{width:100%;background:var(--green);color:#000;font-family:inherit;font-size:13px;font-weight:900;letter-spacing:2px;border:none;border-radius:var(--radius);padding:18px;cursor:pointer;transition:background .15s,transform .1s;margin-top:8px;}
+.submit-btn:hover:not(:disabled){background:var(--green-hi);transform:translateY(-1px);}
+.submit-btn:disabled{background:var(--border);color:var(--dim);cursor:default;transform:none;}
+.submit-note{font-size:10px;color:var(--dim);text-align:center;margin-top:10px;letter-spacing:1px;line-height:1.7;}
+
+/* SUCCESS */
+#successBlock{display:none;background:#0a1f0a;border:2px solid var(--green);border-radius:var(--radius);padding:44px 32px;text-align:center;}
+.success-icon{font-size:40px;margin-bottom:14px;}
+.success-title{font-size:14px;font-weight:900;color:var(--green-hi);letter-spacing:3px;margin-bottom:14px;}
+.success-body{font-size:13px;color:var(--bone);line-height:2;margin-bottom:18px;}
+.success-sig{font-size:11px;color:var(--dim);letter-spacing:2px;}
+.success-sig strong{color:var(--green);}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:20px 24px;text-align:center;font-size:10px;color:var(--dim);letter-spacing:2px;margin-top:40px;}
+footer strong{color:var(--green);}
+</style>
+</head>
+<body>
+
+<!-- Netlify form detection (hidden) -->
+<form name="signal-application" data-netlify="true" netlify-honeypot="bot-trap" hidden>
+  <input name="first_name"/><input name="business"/><input name="trade"/>
+  <input name="city"/><input name="website"/><input name="calls"/>
+  <input name="job_value"/><input name="email"/><input name="source"/>
+  <textarea name="notes"></textarea>
+  <input name="leak_week"/><input name="leak_month"/><input name="leak_year"/>
+  <input name="bot-trap"/>
+</form>
+
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-mark">◈ SignalForge</span>
+    <span class="nav-logo-sub">SYSTEMS</span>
+  </div>
+  <a href="/" class="nav-back">← Back</a>
+</nav>
+
+<div class="wrapper">
+
+  <div class="sys-label">// application.sys — round 3 — 7 spots</div>
+
+  <h1 class="page-title">
+    You said yes.<br/>
+    <span class="accent">Let's find out if you qualify.</span>
+  </h1>
+
+  <p class="page-sub">
+    Fill this in honestly. <strong>I review every application personally before we talk.</strong>
+    If the numbers make sense, you'll receive a free Signal Snapshot —
+    a short breakdown of exactly what I found in your business —
+    along with three times to connect. You pick the one that works.
+  </p>
+
+  <div class="cohort-bar">
+    <div class="cohort-dot"></div>
+    <div class="cohort-text"><strong>4 of 7 spots remaining.</strong> Round 3 doesn't reopen.</div>
+    <div class="cohort-pips">
+      <div class="pip taken"></div><div class="pip taken"></div><div class="pip taken"></div>
+      <div class="pip open"></div><div class="pip open"></div><div class="pip open"></div><div class="pip open"></div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <form id="appForm" class="form-wrap" novalidate>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="first_name">YOUR FIRST NAME *</label>
+        <input type="text" id="first_name" name="first_name" placeholder="First name" required/>
+      </div>
+      <div class="field">
+        <label for="business">BUSINESS NAME *</label>
+        <input type="text" id="business" name="business" placeholder="Your business" required/>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="trade">TYPE OF BUSINESS *</label>
+        <select id="trade" name="trade" required>
+          <option value="" disabled selected>Select your trade</option>
+          <option>Plumber</option>
+          <option>HVAC</option>
+          <option>Electrician</option>
+          <option>Roofer</option>
+          <option>Contractor / Builder</option>
+          <option>Landscaper</option>
+          <option>Pest Control</option>
+          <option>Auto Repair</option>
+          <option>Dentist / Medical</option>
+          <option>Other Service Business</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="city">CITY / STATE *</label>
+        <input type="text" id="city" name="city" placeholder="e.g. Austin, TX" required/>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="website">BUSINESS WEBSITE OR GOOGLE LISTING URL</label>
+      <input type="url" id="website" name="website" placeholder="https://yourbusiness.com"/>
+      <div class="hint">This is how I build your Signal Snapshot before we talk. The more specific the better.</div>
+    </div>
+
+    <!-- THE NUMBERS -->
+    <div class="math-box">
+      <div class="math-box-label">THE NUMBERS — BE HONEST WITH YOURSELF</div>
+      <div class="field-row">
+        <div class="field">
+          <label for="calls">MISSED CALLS PER WEEK *</label>
+          <input type="number" id="calls" name="calls" class="big" placeholder="5" min="1" max="200" required oninput="calcLeak()"/>
+          <div class="hint">After hours, busy periods — anything that rings out.</div>
+        </div>
+        <div class="field">
+          <label for="job_value">AVERAGE JOB VALUE ($) *</label>
+          <input type="number" id="job_value" name="job_value" class="big" placeholder="400" min="1" required oninput="calcLeak()"/>
+          <div class="hint">What does a standard booked job pay you?</div>
+        </div>
+      </div>
+
+      <div id="leakBox">
+        <div class="leak-top-label">YOUR REVENUE LEAK — CALCULATED IN REAL TIME</div>
+        <div class="leak-nums">
+          <div class="leak-cell">
+            <div class="leak-num week" id="lk-week">—</div>
+            <div class="leak-period">PER WEEK</div>
+          </div>
+          <div class="leak-cell">
+            <div class="leak-num month" id="lk-month">—</div>
+            <div class="leak-period">PER MONTH</div>
+          </div>
+          <div class="leak-cell">
+            <div class="leak-num year" id="lk-year">—</div>
+            <div class="leak-period">PER YEAR</div>
+          </div>
+        </div>
+        <div class="leak-verdict" id="lk-verdict"></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="source">HOW DID YOU FIND THIS?</label>
+      <select id="source" name="source">
+        <option value="" disabled selected>Select one</option>
+        <option>Signal Snapshot video you sent me</option>
+        <option>LinkedIn</option>
+        <option>Google</option>
+        <option>Referral</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="email">YOUR EMAIL ADDRESS *</label>
+      <input type="email" id="email" name="email" placeholder="youremail@business.com" required/>
+      <div class="hint">Your Signal Snapshot and call times arrive here. One email. No spam.</div>
+    </div>
+
+    <div class="field">
+      <label for="notes">ANYTHING ELSE I SHOULD KNOW? <span style="font-weight:400;color:var(--dim)">(optional)</span></label>
+      <textarea id="notes" name="notes" placeholder="The specific thing that made you fill this in..."></textarea>
+    </div>
+
+    <div>
+      <button type="submit" class="submit-btn" id="submitBtn">SEND MY APPLICATION →</button>
+      <div class="submit-note">
+        YOU'LL RECEIVE YOUR FREE SIGNAL SNAPSHOT WITHIN 24 HOURS.<br/>
+        IF YOU'RE NOT A FIT, I'LL TELL YOU THAT TOO.
+      </div>
+    </div>
+
+  </form>
+
+  <!-- SUCCESS STATE -->
+  <div id="successBlock">
+    <div class="success-icon">✓</div>
+    <div class="success-title">APPLICATION RECEIVED</div>
+    <div class="success-body">
+      I'll review your numbers and record your<br/>
+      Signal Snapshot personally.<br/><br/>
+      Check your inbox within 24 hours.<br/>
+      You'll get the snapshot and three times to connect.<br/>
+      You pick the one that works.
+    </div>
+    <div class="success-sig">— <strong>Raphael</strong> · SignalForge Systems</div>
+  </div>
+
+</div>
+
+<footer><strong>◈ SignalForge Systems</strong> · Round 3 · Revenue Recovery Infrastructure</footer>
+
+<script>
+function fmt(n){return'$'+Math.round(n).toLocaleString();}
+
+function calcLeak(){
+  var calls=parseFloat(document.getElementById('calls').value)||0;
+  var val=parseFloat(document.getElementById('job_value').value)||0;
+  var box=document.getElementById('leakBox');
+  if(calls>0&&val>0){
+    var week=calls*val;
+    var month=week*4.3;
+    var year=week*52;
+    document.getElementById('lk-week').textContent=fmt(week);
+    document.getElementById('lk-month').textContent=fmt(month);
+    document.getElementById('lk-year').textContent=fmt(year);
+    var payback=Math.ceil(3555/week);
+    var msg='';
+    if(year>=50000){
+      msg='<span class="warn">That\'s '+fmt(year)+' a year leaving your business.</span> The system costs $3,555 once. At your numbers it pays for itself in <strong>'+payback+' week'+(payback===1?'':'s')+'</strong> — then it runs indefinitely.';
+    }else if(year>=20000){
+      msg='<strong>That\'s '+fmt(year)+' a year quietly leaving your business.</strong> One-time fix. $3,555. Live in 7 days.';
+    }else{
+      msg='<strong>That\'s '+fmt(year)+' a year.</strong> Even at these numbers the system recovers its cost in under a month.';
+    }
+    document.getElementById('lk-verdict').innerHTML=msg;
+    box.style.display='block';
+  }else{
+    box.style.display='none';
+  }
+}
+
+document.getElementById('appForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var required=['first_name','business','trade','city','calls','job_value','email'];
+  var ok=true;
+  required.forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el.value.trim()){
+      el.style.borderColor='var(--red)';
+      if(ok){el.focus();ok=false;}
+    }else{
+      el.style.borderColor='var(--border)';
+    }
+  });
+  if(!ok)return;
+
+  var btn=document.getElementById('submitBtn');
+  btn.textContent='SENDING...';
+  btn.disabled=true;
+
+  var data={
+    'form-name':'signal-application',
+    first_name:document.getElementById('first_name').value,
+    business:document.getElementById('business').value,
+    trade:document.getElementById('trade').value,
+    city:document.getElementById('city').value,
+    website:document.getElementById('website').value,
+    calls:document.getElementById('calls').value,
+    job_value:document.getElementById('job_value').value,
+    email:document.getElementById('email').value,
+    source:document.getElementById('source').value,
+    notes:document.getElementById('notes').value,
+    leak_week:document.getElementById('lk-week').textContent,
+    leak_month:document.getElementById('lk-month').textContent,
+    leak_year:document.getElementById('lk-year').textContent
+  };
+
+  fetch('https://formspree.io/f/xwvwbpwa',{
+    method:'POST',
+    headers:{'Accept':'application/json','Content-Type':'application/x-www-form-urlencoded'},
+    body:new URLSearchParams(data).toString()
+  }).then(done).catch(done);
+
+  function done(){
+    document.getElementById('appForm').style.display='none';
+    var s=document.getElementById('successBlock');
+    s.style.display='block';
+    s.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+});
+</script>
+</body>
+</html>
